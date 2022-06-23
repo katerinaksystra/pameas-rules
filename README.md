@@ -1,14 +1,24 @@
 ## Introduction
+The PaMEAS Evacuation Policy is part of the PaMEAS (Passenger Mustering and Evacuation Process Automation) integrated system which was developed in the context of the PALAEMON project. Specifically this policy defines the evacuation of a ship as a process with eight distinct **Evacuation Phases**. Each phase defines one or more **Evacuation Tasks** that must be executed by the passengers and/or crew members. The PaMEAS Evacuation Policy maps each such task to a (set of possibly empty) **message objects** (depending on whether the task is a messaging task or not) that specify the messages that must be communicated to the passengers and/or crew members. Essentially, these message objects are produced by executing in the current context the rules defining the policy. The result of this execution is the generation of the messages that need to be delivered to the passengers and crew (recipients, type of messages, communication channel, content and so on) instructing them to implement the various evacuation tasks. 
 
-The aim of this document is to present the ‘evacuation policy’ used by the PaMEAS System which was developed in the context of the PALAEMON project.
+This policy is communicated directly to passengers’ and crew personal devices (e.g. mobile phones, smart bracelets, smartwatches, etc.) via easy to read and comprehend messages, alerts, warnings and notifications, in the form of simple text messages but also as audio-visual communication (*examples:* “The designated evacuation route to Master Station 1 has been blocked. Follow the alternative path below. (passengers and crew), or “Move to designated emergency posts “(crew)) via PaMEAS.
+
 PaMEAS Evacuation Messaging Policy is formalised as a set of Event Condition Action (ECA) rules that specify what actions a given subject (passenger or crew of the ship) should take on a given evacuation phase based on the passenger identity profile and health-status information, their location and the availability of evacuation routes; as well as on eventual incidents (for example, passengers locked in a cabin) that may occur during the evacuation process which require the intervention of the crew.
 
-This policy is communicated directly to passengers’ and crew personal devices (e.g. mobile phones, smart bracelets, smartwatches, etc.) via easy to read and comprehend messages, alerts, warnings and notifications, in the form of simple text messages but also as audio-visual communication (examples: “The designated evacuation route to Master Station 1 has been blocked. Follow the alternative path below. (passengers and crew), or “Move to designated emergency posts “(crew)) via PaMEAS.
-
 ## PaMEAS Evacuation Messaging Policy
-In order to define the evacuation policy, we first define the evacuation of a ship as a process with (8) distinct Evacuation Process Phases, where each phase has one or more Evacuation Process Phase Tasks. In our model, each task results in the creation of an (empty or non-empty) message object (depending on whether the task is a messaging task or not). Finally, a message object defines the messages that need to be delivered to the passengers and crew of the ship under the current evacuation task, based on the rules of the PaMEAS evacuation messaging policy.
-
 To formalise the evacuation policy we use the concept of a Policy Rule. Each rule is an Event Condition Action (ECA) rule that has three parts. One is the event which when detected triggers the rule, another is the condition which if it holds it fires the execution of the rule and the application of its action (third part). The rules can be combined into rule sets with logical connectives. One or more rule sets form a rule family and one or more rule families form the policy. 
+
+After analysing the respective literature and consulting with industry experts, our evacuation policy defines four main family of rules that are used to express its purpose:
+
+**RF1:** The first rule family consists of one ruleset and its purpose is to define the evacuation profile of the passengers based on their health data.
+
+**RF2:** The second rule family consists of two rulesets and its purpose is to define the evacuation path the passengers must follow based on their location and the status of the evacuation routes.
+
+**RF3:** The third rule family consists of one ruleset and its purpose is to compose the message objects of each evacuation task based on the evacuation phase and the emergency information that needs to be communicated under each task.
+
+**RF4:** The fourth rule family consists of two rulesets and its purpose is to define the body of the message object (including any auxiliary files, e.g. picture of evacuation paths, etc.) to be sent during the evacuation phases of the ship to the passengers and crew: 
+The first rule set defines the messages addressed to the crew.
+The second rule set defines the messages addressed to the passengers of the ship.
 
 In detail, the first rule family is defined as follows:
 
