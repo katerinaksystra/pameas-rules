@@ -1,3 +1,67 @@
+## Introduction
+
+The aim of this document is to present the ‘evacuation policy’ used by the PaMEAS System which was developed in the context of the PALAEMON project.
+PaMEAS Evacuation Messaging Policy is formalised as a set of Event Condition Action (ECA) rules that specify what actions a given subject (passenger or crew of the ship) should take on a given evacuation phase based on the passenger identity profile and health-status information, their location and the availability of evacuation routes; as well as on eventual incidents (for example, passengers locked in a cabin) that may occur during the evacuation process which require the intervention of the crew.
+
+This policy is communicated directly to passengers’ and crew personal devices (e.g. mobile phones, smart bracelets, smartwatches, etc.) via easy to read and comprehend messages, alerts, warnings and notifications, in the form of simple text messages but also as audio-visual communication (examples: “The designated evacuation route to Master Station 1 has been blocked. Follow the alternative path below. (passengers and crew), or “Move to designated emergency posts “(crew)) via PaMEAS.
+
+## PaMEAS Evacuation Messaging Policy
+In order to define the evacuation policy, we first define the evacuation of a ship as a process with (8) distinct Evacuation Process Phases, where each phase has one or more Evacuation Process Phase Tasks. In our model, each task results in the creation of an (empty or non-empty) message object (depending on whether the task is a messaging task or not). Finally, a message object defines the messages that need to be delivered to the passengers and crew of the ship under the current evacuation task, based on the rules of the PaMEAS evacuation messaging policy.
+
+In detail, to formalise the evacuation policy we use the concept of a Policy Rule. Each rule is an Event Condition Action (ECA) rule that has three parts. One is the event which when detected triggers the rule, another is the condition which if it holds it fires the execution of the rule and the application of its action (third part). The rules can be combined into rule sets with logical connectives. One or more rule sets form a rule family and one or more rule families form the policy. 
+
+After analysing the respective literature and consulting with industry experts, our evacuation policy defines four main family of rules that are used to express its purpose:
+
+RF1: The first rule family consists of one ruleset and its purpose is to define the evacuation profile of the passengers based on their health data.
+
+RF2: The second rule family consists of two rulesets and its purpose is to define the evacuation path the passengers must follow based on their location and the status of the evacuation routes.
+
+RF3: The third rule family consists of one ruleset and its purpose is to compose the message objects of each evacuation task based on the evacuation phase and the emergency information that needs to be communicated under each task.
+
+RF4: The fourth rule family consists of two rulesets and its purpose is to define the body of the message object (including any auxiliary files, e.g. picture of evacuation paths, etc.) to be sent during the evacuation phases of the ship to the passengers and crew:
+
+The first rule set defines the messages addressed to the crew.
+The second rule set defines the messages addressed to the passengers of the ship.
+
+The aforementioned rule families and their rule sets form the PaMEAS evacuation messaging policy and specify what actions a given subject should take on a given evacuation phase based on the passenger identity profile and health-status information, their location and the availability of evacuation routes; as well as on unforeseen incidents that may occur during the evacuation process which require the intervention of the crew and composes the messages that need to be delivered to the passengers and crew of the ship accordingly. 
+
+In detail, the first rule family is defined as follows:
+
+Definition 1 (RF1 - Evacuation profile ruleset). Assume a system state S and a detected event by the system E. RuleFamily1(S, E) consists of one rule set of Event Condition Action (ECA) rules of the form ON event IF condition THEN DO action, defined as follows:
+```
+ECA(
+ON(Evacuation_Phase_4_Start_event)
+IF(getPerson(S) = p /\ p.getType() == Passenger /\
+p.getMedicalAssistance() \in SET_OF_MEDICAL_ASSISTANCE /\ p.getMobilityIssues() \in SET_OF_MOBILITY_ISSUES /\ p.getPregnancyData() \in SET_OF_PREGRANCY_DATA)
+THEN DO(AssignType(p, assingment_type) /\ assignment_type \in SET_OF_ASSIGNMENT_TYPE)
+)
+```
+
+In this definition:
+
+Evacuation_Phase_4_Start_event \in SET_of_Defined_Events which is a set of predefined events that change the system state 
+
+Evacuation_Phase_4_Start_event denotes the start event of the evacuation phase 4, i.e. the launch of the evacuation protocol
+p is a constant of type Person
+
+getPerson: S -> Person is a function that takes as input a state of the system and returns the person of that state 
+
+getType : Person -> pType is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+
+getMedicalAssistance: Person -> SET_OF_MEDICAL_ASSISTANCE is a function that takes as input an element of type Person and returns an element of the set {“equip_required”, “stretcher”, “heavy_doses”, “none”} that denotes whether the person requires medical assistance during evacuation or not (requires medical equipment during evacuation, requires a stretcher, receives medication affecting their ability to complete the evacuation process safely without assistance or is able to evacuate unassisted, respectively).
+
+getMobilityStatus: Person -> SET_OF_MOBILITY_ISSUES is a function that takes as input an element of type Person and returns an element of the set {"assisted_gait","walking_disability",”severe_walking_disability”,”unable_to_walk”,
+ ”visually_impaired”,”hearing_impaired”,”cognitive_impaired”, "none"} that denotes whether the person has any mobility issue or not (requires walking cane, frame, or crutches to move to the assembly station, requires wheelchair to move to the assembly station, requires wheelchair to move to the assembly station and must be carried up/down steps, is unable to walk, has impairments that may affect his mobility, or no mobility problems, respectively.
+ 
+getPregnancyStatus: Person -> SET_OF_PREGRANCY_DATA is a function that takes as input an element of type Person and returns an element of the set{"complicated”, “normal”} that denotes the pregnancy status of that person
+
+AssignType: Person->SET_OF_ASSIGNMENTS is a function that takes as input an element of type Person and assigns to that person an element of the set {“follow path”, “wait help”} denoting whether that person can follow the instructions received in their personal devices or needs personal assistance by the crew to evacuate.
+
+Additionally:
+getAssignType: Person->Assignment is a function that takes as input a person and returns his assignment type.
+
+Essentially, the Evacuation profile ruleset is triggered after the launch of the evacuation protocol (event) and defines the passenger’s evacuation profile (action) based on their health data (condition) by categorising them as being able to follow the instructions of the messages delivered to them or need help to evacuate by a crew member.
+
 ## PaMEAS Evacuation Messaging ECA Rules
 
 RuleSet 1: Evacuation profile rules
