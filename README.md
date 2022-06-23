@@ -730,7 +730,7 @@ THEN DO(SetMessageBody(p,1.2,”Proceed to the hazard area:
 ‘getEmergencyLocation’ and provide confirmation!!”) and
 SetMessageFile(p,1.2,PathImage) and SendMessage(p,1.2))
 )
-``
+```
 
 Rule 4.2.4.1:
 ```
