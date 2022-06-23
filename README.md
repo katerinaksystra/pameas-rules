@@ -1,17 +1,20 @@
 PaMEAS Evacuation Messaging ECA Rules
 RuleSet 1: Evacuation profile rules
+
 Rule 1.1:
-ECA(
+`ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Medical_Assistance = none and p.Mobility_Issues = none and p.Pregnancy_data = normal)
 THEN DO(Passenger.Assignement_Type == FOLLOW_PATH)
-)
+)`
+
 Rule 1.2:
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Medical_Assistance = equip_required)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+
 Rule 1.3:
 ECA(
 ON(Evacuation_Phase_4_Start_event)
