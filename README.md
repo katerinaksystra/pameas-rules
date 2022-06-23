@@ -611,7 +611,7 @@ p.Language == English and p.getMobilityIssues =/= visually_impaired)
 THEN DO(SetMessageBody(p,5.1, “Fire Onboard. Prepare for immediate evacuation.
 This is not a drill!!”) and SendMessage(p,5.1))
 )
-``
+```
 
 Rule 4.1.5.1.2-EN-VI:
 ```
