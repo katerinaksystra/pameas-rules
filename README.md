@@ -220,7 +220,9 @@ and getStatusMSPath(S,[S8-7.4,7BG1]) = free))
 THEN DO(AssignMSpath(p,[8G9,S8-7.4,7BG1]))
 )
 ```
+
 Rule 2.1.11:
+```
 ECA(
 ON(Mustering_actions_profile_completed)
 IF(getPerson(S)= p and p.Type == PASSENGER and
