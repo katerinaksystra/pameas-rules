@@ -8,22 +8,7 @@ This policy is communicated directly to passengers’ and crew personal devices 
 ## PaMEAS Evacuation Messaging Policy
 In order to define the evacuation policy, we first define the evacuation of a ship as a process with (8) distinct Evacuation Process Phases, where each phase has one or more Evacuation Process Phase Tasks. In our model, each task results in the creation of an (empty or non-empty) message object (depending on whether the task is a messaging task or not). Finally, a message object defines the messages that need to be delivered to the passengers and crew of the ship under the current evacuation task, based on the rules of the PaMEAS evacuation messaging policy.
 
-In detail, to formalise the evacuation policy we use the concept of a Policy Rule. Each rule is an Event Condition Action (ECA) rule that has three parts. One is the event which when detected triggers the rule, another is the condition which if it holds it fires the execution of the rule and the application of its action (third part). The rules can be combined into rule sets with logical connectives. One or more rule sets form a rule family and one or more rule families form the policy. 
-
-After analysing the respective literature and consulting with industry experts, our evacuation policy defines four main family of rules that are used to express its purpose:
-
-RF1: The first rule family consists of one ruleset and its purpose is to define the evacuation profile of the passengers based on their health data.
-
-RF2: The second rule family consists of two rulesets and its purpose is to define the evacuation path the passengers must follow based on their location and the status of the evacuation routes.
-
-RF3: The third rule family consists of one ruleset and its purpose is to compose the message objects of each evacuation task based on the evacuation phase and the emergency information that needs to be communicated under each task.
-
-RF4: The fourth rule family consists of two rulesets and its purpose is to define the body of the message object (including any auxiliary files, e.g. picture of evacuation paths, etc.) to be sent during the evacuation phases of the ship to the passengers and crew:
-
-The first rule set defines the messages addressed to the crew.
-The second rule set defines the messages addressed to the passengers of the ship.
-
-The aforementioned rule families and their rule sets form the PaMEAS evacuation messaging policy and specify what actions a given subject should take on a given evacuation phase based on the passenger identity profile and health-status information, their location and the availability of evacuation routes; as well as on unforeseen incidents that may occur during the evacuation process which require the intervention of the crew and composes the messages that need to be delivered to the passengers and crew of the ship accordingly. 
+To formalise the evacuation policy we use the concept of a Policy Rule. Each rule is an Event Condition Action (ECA) rule that has three parts. One is the event which when detected triggers the rule, another is the condition which if it holds it fires the execution of the rule and the application of its action (third part). The rules can be combined into rule sets with logical connectives. One or more rule sets form a rule family and one or more rule families form the policy. 
 
 In detail, the first rule family is defined as follows:
 
@@ -61,6 +46,164 @@ Additionally:
 getAssignType: Person->Assignment is a function that takes as input a person and returns his assignment type.
 
 Essentially, the Evacuation profile ruleset is triggered after the launch of the evacuation protocol (event) and defines the passenger’s evacuation profile (action) based on their health data (condition) by categorising them as being able to follow the instructions of the messages delivered to them or need help to evacuate by a crew member.
+
+The second rule family is defined as follows:
+
+Definition 2 (RF2). Assume a system state S and a detected event by the system E. RuleFamily_2(S, E) consists of two rule sets of Event Condition Action (ECA) rules of the form ON event IF condition THEN DO action, defined as follows:
+Definition 2.1 (RS2.1 - Evacuation path ruleset): The Evacuation path ruleset is defined as follows:
+```
+ECA(
+ON(Evacuation_profile_completed)
+IF(getPerson(S) = p /\ p.getType() == Passenger /\ getGeofence(S,p) == g /\ getAssignMSpath(p) == none /\ getStatusMSPath(S,MSpath) == free)
+THEN DO(AssignMSpath(p,MSpath)) 
+)
+```
+In this definition:
+
+Evacuation_profile_completed \in SET_of_Defined_Events which is a set of predefined events that change the system state
+Evacuation_profile_completed event denotes the completion of the evacuation profiles of the passengers 
+p is a constant of type Person
+getPerson: S-> Person is a function that takes as input a state of the system and returns the person of the state 
+getType : Person-> pType is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+g is a constant of type Geofence
+getGeofence: Person State->Geofence is a function that takes as input an element of type Person and returns the geofence of the ship in which the person is currently located 
+getAssignMSpath: Person-> Path  is a function that takes as input a Person and returns the path to the assigned Master Station of that person 
+getStatusMSPath: State Path->Status is a function that takes as input a state and a path to a Master Station and returns an element of the set {free, blocked} denoting the current status of the path to the master station
+AssignMSpath: Person->SET_OF_MS_PATHS is a function that takes as input an element of type Person and assigns a path and a Master Station to that person 
+
+Additionally:
+getPathDescription : Path->PathDescription is a function that takes as input a Path and returns the description of it, i.e. instructions in order to follow this path
+getPathImage : Path->Image is a function that takes as input a Path and returns an image with a map of this path 
+
+Essentially, the Evacuation path profile ruleset is triggered after the completion of the evacuation profiles of the passengers (event) and defines each passenger’s mustering path (action) based on their current location and the status of the paths (condition) by assigning to the passenger a Master Sation and a Path to the Master Station. 
+
+The second ruleset is defined as;
+Definition 2.2 (RS2.2 - Update Evacuation path ruleset): The Update Evacuation path ruleset is defined as follows:
+```
+ECA(
+ON(Evacuation_profile_completed and GeoFence_status_update)
+IF(getPerson(S) = p /\ p.getType() == Passenger /\ getStatusMSPath(S,getAssignMSpath(p)) == blocked /\ p.getGeofence() =/= p.getAssignMS())
+THEN DO (AssignMSpath(p,getAltPath(getAssignMSpath(p),getBlockedGeofence(S,getAssignMSpath(p)))))
+)
+```
+In this definition:
+
+GeoFence_status_update \in SET_of_Defined_Events which is a set of predefined events that change the system state
+GeoFence_status_update event denotes that the status of the geofences has changed
+p is a constant of type Person
+getPerson: State->Person is a function that takes as input a state of the system and returns the person of the state 
+getType : Person -> pType is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+getAssignMSpath: Person-> Path  is a function that takes as input a Person and returns the path to the assigned Master Station of that person 
+getStatusMSPath: State Path->Status is a function that takes as input a state and a path to a Master Station and returns an element of the set {free, blocked} denoting the current status of the path to the master station
+getBlockedGeofence : State Path->Geofence is a function that takes as input a state and a path to a Master Station and returns the blocked geofences of this path
+gi is a constant of type Geofence
+getGeofence: Person State->Geofence is a function that takes as input an element of type Person and returns the geofence of the ship in which the person is currently located 
+getAssignMS: Person-> MasterStation  is a function that takes as input a Person and returns the Assigned Master Station of that person (last element of the MSpath)
+AssignMSpath: Person->SET_OF_MS_PATHS is a function that takes as input an element of type Person and assigns to that person a Master Station and a path to the Assigned Master Station
+getAltPath: Path Geofence->Path is a function that takes as input a path and the blocked geofences of the path and returns an alternative path for the same destination
+
+Essentially, the Update Evacuation path profile ruleset is triggered when the status of one or more geofences changes due to the evolution of the emergency (event) and if the geofences of a Passenger’s path to his master station become blocked and he hasn’t arrived to his Master Station yet (condition) it basically re-assigns a path (and/or a master station) to him (action).
+
+The third rule family is defined as follows:
+Definition 3 (RF3 - Message object composition ruleset). Assume a system state S and a detected event by the system E. RuleFamily_3(S, E) consists of one rule set of Event Condition Action (ECA) rules of the form ON event IF condition THEN DO action, defined as follows: 
+```
+ECA(
+ON(Evacuation_Phase_i_Start_event)
+IF(getEvacuationTask(S) = t /\ t.getType() == tType /\ tType \in SET_OF_tTYPE)
+THEN DO(
+ComposeMessageObject(t)/\ SetMessagetype(m, message_type) /\ message_type \in SET_OF_MESSAGE_TYPE /\ SetMessageSender(m, message_sender) /\ message_sender \in SET_OF__SENDER /\ SetMessageAudience(m, message_audience) /\ message_audience \in SET_OF__AUDIENCE /\ SetMessageLayout(m, message_layout) /\ message_layout \in SET_OF__LAYOUT /\ SetMessageChannel(m, message_channel) /\ message_channel \in SET_OF__CHANNEL /\ SetMessageBody(p, m, empty)/\ SetMessageFile(p, m, none)/\
+)
+```
+In this definition:
+
+Evacuation_Phase_i_Start_event, i = 1, … , 8 \in SET_of_Defined_Events, which is a set of predefined events that when detected change the state of the system
+Evacuation_Phase_i_Start_event, i = 1, … , 8 denote the start events of the eight evacuation phases 
+t is a constant of type Task
+getEvacuationTask: S -> Task is a function that takes as input a state of the system and returns the evacuation process task of that state 
+getType: Task -> tType is a function that takes as input an element of type Task and returns his type, an element of the set {“Messaging”, “NoMessaging”}
+ComposeMessageObject: Task -> MessageObject is a function that takes as input an element of type Task and composes the message object of this task
+m is a constant of type MessageObject
+SetMessageType: MessageObject Messagetype-> MessageObject is a function that takes as input an element of type MessageObject and an element of the set {“Alert”, “Warning”, “Notifications”, "Feedback message", "Communication Session"} and creates the message type of the message object
+SetMessageSender: MessageObject MessageSender->MessageObject  is a function that takes as input an element of type MessageObject and an element of the set {“Crew”, “Evacuation Coordinator”, "PaMEAS"} and creates the message sender of the message object
+SetMessageAudience: MessageObject MessageAudience-> MessageObject  is a function that takes as input an element of type MessageObject and an element of the set {“Crew”, “Passengers”, "Crew Managers", "Evacuation Coordinator", "PaMEAS"} and creates the audience of the message object
+SetMessageLayout: MessageObject MessageLayout->MessageObject  is a function that takes as input an element of type MessageObject and an element of the set {“text", "visual", "voice", "vibration", video”} and creates the layout of the message object
+SetMessageChannel: MessageObject MessageChannel -> MessageObject  is a function that takes as input an element of type MessageObject and an element of the set {“Task Management Service”, “Evacuation Management Service”} and creates the delivery channel of the message object
+SetMessageBody: Person MessageObject MessageBody->MessageObject is a function that takes as input a person, a message object and a message body and creates the message body of the message object addressed to that person
+SetMessageFile: Person MessageObject File-> MessageObject is a function that takes as input a person, a message object and a file and includes it to the message object addressed to that person
+Empty is a constant denoting an empty message body
+None is a constant denoting that there is no auxiliary file included it in the message object
+
+The Message object composition ruleset essentially checks in which evacuation phase the system is (event) and based on the evacuation process task that needs to be executed (condition) composes the message objects of the task (action). The message object of each evacuation task contains the basic characteristics of the messages (type, sender, audience, layout and delivery channel) that will be disseminated during this evacuation task. The body of the message object and any additional files it may contain will be defined based on the recipients’ personalised profiles and the evacuation process task.
+
+The fourth rule family is defined as follows:
+
+Definition 4 (RF4). Assume a system state S and a detected event by the system E. RuleFamily_3(S, E) consists of two rule sets of Event Condition Action (ECA) rules of the form ON event IF condition THEN DO action, defined as follows;
+Definition 4.1 (RS4.1 - Passenger Message creation ruleset): The Passenger Message creation ECA ruleset is defined as:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = m /\ m =/= empty
+/\ m.getMessageAudience() == Passenger 
+/\ getPerson(S) = p /\ p.getType() == Passenger /\ p.getLanguage() == pLanguage /\ pLanguage \in SET_OF_LANGUAGE /\ p.getAssignType() == assignment_type /\ assignment_type \in SET_OF_ASSIGNMENT_TYPE /\ p.getMobilityStatus == mobility_issue /\ mobility_issue \in SET_OF_MOBILITY_ISSUES)
+THEN DO(SetMessageBody(p, o, message_body) /\ message_body \in String /\ SetMessageFile(p, o, file) /\ file \in SET_OF_FILE /\ SendMessage(p, o)
+)
+```
+In this definition:
+
+Message_Object_Composition_Completed \in SET_of_Defined_Events, which is a set of predefined events that when detected change the state of the system
+Message_Object_Composition_Completed denotes the completion of the message object composition phase 
+getMessageObject : State -> MessageObject is a function that takes as input a state of the system and returns the Message object of the state 
+m is a constant of type MessageObject
+empty is a constant of type MessageObject denoting an empty message object
+getMessageAudience: MessageObject->MessageAudience is a function that takes as input a MessageObject and and returns the audience of the message object
+getPerson: S -> Person is a function that takes as input a state of the system 
+p is a constant of type Person
+getType : Person -> pType is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+getLanguage: Person-> pLanguage is a function that takes as input a Person and returns the language of that person, an element of the set{"English", "Greek", "French" , "Italian"}
+getAssignType : Person -> pAssignType is a function that takes as input an element of type Person and returns his assignment type, an element of the set{“follow path”, “wait help”}
+getMobilityStatus: Person -> SET_OF_MOBILITY_ISSUES is a function that takes as input an element of type Person and returns the mobility issue of the person, if any
+SetMessageBody: Person MessageObject MessageBody-> MessageObject is a function that takes as input a person, a message object and a message body and sets the message body of the message object addressed to that person
+SetMessageFIle: Person MessageObject File-> MessageObject is a function that takes as input a person, a message object and a message file and includes it in the message object addressed to that person
+SendMessage(p, o) sends to the Person p the MessageObject  o 
+
+The Passenger Message creation ruleset is triggered after the creation of a message object (event) and defines the message to be sent (action) if the message object is addressed to passengers based on their personalised profile (condition) (and the evacuation phase).
+
+The second rule set of this rule family is defined as;
+Definition 4.2 (RS4.2 - Crew Message creation ruleset): The Crew Message creation ruleset is defined as:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = m /\ m =/= empty 
+/\ m.getMessageAudience() == Crew 
+/\ getPerson(S) = p /\ p.getType() == Crew)
+THEN DO(SetMessageBody(p, o, message_body) /\ message_body \in String SetMessageFile(p, o, file) /\ file \in SET_OF_FILES /\ SendMessage(p, o)
+)
+```
+In this definition:
+
+Message_Object_Composition_Completed \in SET_of_Defined_Events 
+getMessageObject: State ->MessageObject is a function that takes as input a state of the system and returns the message object of that state
+m is a constant of type MessageObject
+empty is a constant of type MessageObject denoting an empty message object
+getMessageAudience: MessageObject->messageAudience is a function that takes as input a MessageObject and and returns the audience of the message object
+getPerson: S->Person is a function that takes as input a state of the system and returns the person of the state 
+p is a constant of type Person
+getType : Person->pType is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+SetMessageBody: Person MessageObject MessageBody->MessageObject is a function that takes as input a person, a message object and a message body and sets the message body of that message object 
+SetMessageFIle: Person MessageObject File-> MessageObject is a function that takes as input a person, a message object and a file and includes it in the message object 
+SendMessage(p, o) sends to the Person p the MessageObject  o 
+
+Additionally:
+getEmergencyPost : Person->Post is an function that takes as input a person and returns his assigned emergency post
+getEmergencyLocation : State->Location is a function that takes as input a state of the system and returns the emergency location of the state
+getEmergencytype : State->EmergencyType is a function that takes as input a state of the system and returns the type of the emergency of this state
+getIssueLocation: State -> Location is a function that takes as input a state of the system and returns the location of the issue of this state (e.g. low performance of mustering process)
+getIncidentLocation : State->Location is a function that takes as input a state of the system and returns the location of the incident of this state
+getIncidentType : State->IncidentType is a function that takes as input a state of the system and returns the type of the incident of this state
+getAssignedPassenger : State Person -> Person is a function that takes as input a state of the system and a Crew member that is assigned to help a passenger in need in this state and returns that passenger
+
+The Crew Message creation ruleset essentially is triggered after the creation of a message object (event) and defines the message to be sent (action) if the message object is addressed to the crew based on their emergency posts (condition) (and the evolution of the emergency).
+
 
 ## PaMEAS Evacuation Messaging ECA Rules
 
