@@ -1,93 +1,133 @@
 PaMEAS Evacuation Messaging ECA Rules
+
 RuleSet 1: Evacuation profile rules
 
 Rule 1.1:
-`ECA(
+```ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Medical_Assistance = none and p.Mobility_Issues = none and p.Pregnancy_data = normal)
 THEN DO(Passenger.Assignement_Type == FOLLOW_PATH)
-)`
+)
+```
 
 Rule 1.2:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Medical_Assistance = equip_required)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
 
 Rule 1.3:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Medical_Assistance = stretcher)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.4:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Medical_Assistance = heavy_doses)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.5:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = assisted_gait)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.6:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = walking_disability)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.7:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = severe_walking_disability)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.8:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = unable_to_walk)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.9:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = visually_impaired)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.10:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = hearing_impaired)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.11:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Mobility_Issues = cognitive_impaired)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 Rule 1.12:
+```
 ECA(
 ON(Evacuation_Phase_4_Start_event)
 IF(getPerson(S) = p and p.Type == PASSENGER and p.Pregnancy_data = complicated)
 THEN DO(Passenger.Assignement_Type == WAIT_HELP)
 )
+```
+
 RuleSet 2.1: Evacuation path profile rules
+
 Rule 2.1.1:
+```
 ECA(
 ON(Mustering_actions_profile_completed)
 IF(getPerson(S)= p and p.Type == PASSENGER and p.getGeofence(S) = 9G1 and getAssignMSpath(p) == none and getStatusMSPath(S,[S9-8.1,S8-7.1,7BG2,7BG1]) = free))
 THEN DO(AssignMSpath(p,[9G1,S9-8.1,S8-7.1,7BG2,7BG1])) 
 )
+```
+
 Rule 2.1.2:
+```
 ECA(
 ON(Mustering_actions_profile_completed)
 IF(getPerson(S)= p and p.Type == PASSENGER and p.getGeofence(S) = 8G1 and getAssignMSpath(p) == none and getStatusMSPath(S,[S8-7.1,7BG2,7BG1]) = free))
 THEN DO(AssignMSpath(p,[8G1,S8-7.1,7BG2,7BG1])) 
 )
+```
 Rule 2.1.3:
 ECA(
 ON(Mustering_actions_profile_completed)
