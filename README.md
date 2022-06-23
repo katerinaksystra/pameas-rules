@@ -43,6 +43,7 @@ p is a constant of type Person
 *AssignType: Person -> SET_OF_ASSIGNMENTS* is a function that takes as input an element of type Person and assigns to that person an element of the set {“follow path”, “wait help”} denoting whether that person can follow the instructions received in their personal devices or needs personal assistance by the crew to evacuate.
 
 Additionally:
+
 *getAssignType: Person->Assignment* is a function that takes as input a person and returns his assignment type.
 
 Essentially, the Evacuation profile ruleset is triggered after the launch of the evacuation protocol (event) and defines the passenger’s evacuation profile (action) based on their health data (condition) by categorising them as being able to follow the instructions of the messages delivered to them or need help to evacuate by a crew member.
@@ -60,6 +61,7 @@ IF(getPerson(S) = p /\ p.getType() == Passenger /\ getGeofence(S,p) == g /\ getA
 THEN DO(AssignMSpath(p,MSpath)) 
 )
 ```
+
 In this definition:
 
 *Evacuation_profile_completed \in SET_of_Defined_Events* which is a set of predefined events that change the system state
@@ -68,24 +70,24 @@ In this definition:
 
 *p* is a constant of type *Person*
 
-*getPerson: S-> Person* is a function that takes as input a state of the system and returns the person of the state 
+*getPerson: S -> Person* is a function that takes as input a state of the system and returns the person of the state 
 
-*getType : Person-> pType* is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+*getType: Person -> pType* is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
 g is a constant of type Geofence
 
 *getGeofence: Person State -> Geofence* is a function that takes as input an element of type Person and returns the geofence of the ship in which the person is currently located 
 
-*getAssignMSpath: Person-> Pat*h  is a function that takes as input a Person and returns the path to the assigned Master Station of that person 
+*getAssignMSpath: Person -> Pat*h  is a function that takes as input a Person and returns the path to the assigned Master Station of that person 
 
 *getStatusMSPath: State Path -> Status* is a function that takes as input a state and a path to a Master Station and returns an element of the set {free, blocked} denoting the current status of the path to the master station
 
-*AssignMSpath: Person->SET_OF_MS_PATHS* is a function that takes as input an element of type Person and assigns a path and a Master Station to that person 
+*AssignMSpath: Person -> SET_OF_MS_PATHS* is a function that takes as input an element of type Person and assigns a path and a Master Station to that person 
 
 Additionally:
 
-*getPathDescription : Path -> PathDescription* is a function that takes as input a Path and returns the description of it, i.e. instructions in order to follow this path
+*getPathDescription: Path -> PathDescription* is a function that takes as input a Path and returns the description of it, i.e. instructions in order to follow this path
 
-*getPathImage : Path -> Image* is a function that takes as input a Path and returns an image with a map of this path 
+*getPathImage: Path -> Image* is a function that takes as input a Path and returns an image with a map of this path 
 
 Essentially, the Evacuation path profile ruleset is triggered after the completion of the evacuation profiles of the passengers (event) and defines each passenger’s mustering path (action) based on their current location and the status of the paths (condition) by assigning to the passenger a Master Sation and a Path to the Master Station. 
 
@@ -108,13 +110,13 @@ In this definition:
 
 *getPerson: State -> Person* is a function that takes as input a state of the system and returns the person of the state.
 
-*getType : Person -> pType* is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
+*getType: Person -> pType* is a function that takes as input an element of type Person and returns his type, an element of the set {“Crew”, “Passenger”}
 
 *getAssignMSpath: Person -> Path*  is a function that takes as input a Person and returns the path to the assigned Master Station of that person 
 
 *getStatusMSPath: State Path -> Status* is a function that takes as input a state and a path to a Master Station and returns an element of the set {free, blocked} denoting the current status of the path to the master station
 
-*getBlockedGeofence : State Path -> Geofence* is a function that takes as input a state and a path to a Master Station and returns the blocked geofences of this path
+*getBlockedGeofence: State Path -> Geofence* is a function that takes as input a state and a path to a Master Station and returns the blocked geofences of this path
 
 *gi* is a constant of type Geofence
 
