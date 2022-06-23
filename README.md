@@ -514,6 +514,279 @@ SetMessageFile(p,6.9,none))
 )
 ```
 
+Rule 3.7.2:
+```
+ECA(
+ON(Evacuation_Phase_7_Start_event)
+IF(Evacuation Process Task == T7.2)
+THEN DO(
+ComposeMessageObject(t7.2) and
+SetMessagetype(7.2,notifications) and
+SetMessageSender(7.2,PaMEAS) and
+SetMessageAudience(7.2,passengers) and
+SetMessageLayout(7.2,[Text,Visual,Voice]) and
+SetMessageChannel(7.2,EMS) and
+SetMessageBody(p,7.2,empty) and
+SetMessageFile(p,7.2,none))
+)
+```
+
+Rule 3.8.2:
+```
+ECA(
+ON(Evacuation_Phase_8_Start_event)
+IF(Evacuation Process Task == T8.2)
+THEN DO(
+ComposeMessageObject(t8.2) and
+SetMessagetype(8.2,notifications) and
+SetMessageSender(8.2,EC) and
+SetMessageAudience(8.2,crew) and
+SetMessageLayout(8.2,[Text,Visual,Voice]) and
+SetMessageChannel(8.2,TMS) and
+SetMessageBody(p,8.2,empty) and
+SetMessageFile(p,8.2,none))
+)
+```
+
+Rule 3.8.3:
+```
+ECA(
+ON(Evacuation_Phase_8_Start_event)
+IF(Evacuation Process Task == T8.3)
+THEN DO(
+ComposeMessageObject(t8.3) and
+SetMessagetype(8.3,feedback) and
+SetMessageSender(8.3,crew) and
+SetMessageAudience(8.3,EC) and
+SetMessageLayout(8.3,[Text]) and
+SetMessageChannel(8.3,TMS) and
+SetMessageBody(p,8.3,empty) and
+SetMessageFile(p,8.3,none))
+)
+```
+
+Rule 3.8.4:
+```
+ECA(
+ON(Evacuation_Phase_8_Start_event)
+IF(Evacuation Process Task == T8.4)
+THEN DO(
+ComposeMessageObject(t8.4) and
+SetMessagetype(8.4,notifications) and
+SetMessageSender(8.4,PaMEAS) and
+SetMessageAudience(8.4,passengers) and
+SetMessageLayout(8.4,[Text,Visual,Vibration,Voice]) and
+SetMessageChannel(8.4,EMS) and
+SetMessageBody(p,8.4,empty) and
+SetMessageFile(p,8.4,none))
+)
+```
+
+Rule 3.8.5:
+```
+ECA(
+ON(Evacuation_Phase_8_Start_event)
+IF(Evacuation Process Task == T8.5)
+THEN DO(
+ComposeMessageObject(t8.5) and
+SetMessagetype(8.5,communication_session) and
+SetMessageSender(8.5,[EC,CrewManagers]) and
+SetMessageAudience(8.5,crew) and
+SetMessageLayout(8.5,[Text,Voice,Visual,Video]) and
+SetMessageChannel(8.5,TMS) and
+SetMessageBody(p,8.5,empty) and
+SetMessageFile(p,8.5,none))
+)
+```
+
+RuleSet 4.1: Passenger Message creation rules
+
+Rule 4.1.5.1.1-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 5_1 and 5_1.getMessageAudience()
+== Passenger and getPerson(S) = p and p.Type == PASSENGER and
+p.Language == English and p.getMobilityIssues =/= visually_impaired)
+THEN DO(SetMessageBody(p,5.1, “Fire Onboard. Prepare for immediate evacuation.
+This is not a drill!!”) and SendMessage(p,5.1))
+)
+``
+
+Rule 4.1.5.1.2-EN-VI:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 5_1 and 5_1.getMessageAudience()
+== Passenger and getPerson(S) = p and p.Type == PASSENGER and
+p.Language == English and p.getMobilityIssues == visually_impaired)
+THEN DO(SetMessageBody(p,5.1, “Fire Onboard. Prepare for immediate evacuation.
+This is not a drill!!”) and SetMessageFile(p,5.1,textToSpeech_recording_en)
+and SendMessage(p,5.1))
+)
+```
+
+Rule 4.1.6.2.1-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 6_2 and 6_2.getMessageAudience()
+== Passenger and getPerson(S) = p and p.Type == PASSENGER and
+p_Assign_Type == FOLLOW_PATH and p.Language == English)
+THEN DO(SetMessageBody(p, 6.2, “Put on your life jacket, remain calm and
+wait for instructions. Lifejackets are stored in your cabins under your bed
+and at the master stations.”) and
+SendMessage(p,6.2))
+)
+```
+
+Rule 4.1.6.3.1-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 6_3 and 6_3.getMessageAudience() == Passenger and
+getPerson(S) = p and p.Type == PASSENGER and p_Assign_Type == FOLLOW_PATH
+and p.Language == English)
+THEN DO(SetMessageBody(p, 6.3, “Access to Master Station ‘AssignedMasterStation’ is
+via the following path: “PathDescription”) and
+SetMessageFile(p,6.3,pathImage) and SendMessage(p,6.3))
+)
+```
+
+Rule 4.1.6.5.1-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 6_5 and 6_5.getMessageAudience() == Passenger and
+getPerson(S) = p and p.Type == PASSENGER and p_Assign_Type == WAIT_HELP
+and p.Language == English and p.getMobilityIssues =/= visually_impaired)
+THEN DO(SetMessageBody(p,6.5,“Please remain in your location. A crew member
+is on the way to escort you to the master station and will arrive to you really
+shortly.”) and SendMessage(p,6.5))
+)
+```
+
+Rule 4.1.6.5.2-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 6_5 and 6_5.getMessageAudience() == Passenger and
+getPerson(S) = p and p.Type == PASSENGER and p_Assign_Type == WAIT_HELP and
+p.Language == English and p.getMobilityIssues == visually_impaired)
+THEN DO(SetMessageBody(p,6.5,“Please remain in your location. A crew member
+is on the way to escort you to the master station and will arrive to you really
+shortly.”) and SetMessageFile(p,6.5,textToSpeech_recording_en)
+and SendMessage(p,6.5))
+)
+```
+
+Rule 4.1.6.9.1-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 6_9 and 6_9.getMessageAudience() == Passenger and
+getPerson(S) = p and p.Type == PASSENGER and p_AssignType == FOLLOW_PATH and
+p.Language == English)
+THEN DO(SetMessageBody(p,6.9,“’BlockedGeofence’ has been blocked. Follow the
+alternative path below: ‘PathDescription’.”) and SetMessageFile(p,6.9,PathImage)
+and SendMessage(p,6.9))
+)
+```
+
+Rule 4.1.6.7.2-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 7_2 and 7_2.getMessageAudience() == Passenger and
+getPerson(S) = p and p.Type == PASSENGER and p_AssignType == WAIT_HELP and
+p.Language == English)
+THEN DO(SetMessageBody(p,7.2,“Go now to the embarkation station.
+Keep your lifejacket on at all times.”)
+and SendMessage(p,7.2))
+)
+```
+
+Rule 4.1.8.4.1-EN:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) = 8_4 and 8_4.getMessageAudience() == Passenger and
+getPerson(S) = p and p.Type == PASSENGER and p.Language == English and
+p.getMobilityIssues =/= visually_impaired)
+THEN DO(SetMessageBody(p,8.4,“Please remain in your location. Assistance is on the
+way and should arrive to you really shortly.”) and SendMessage(p,8.4))
+)
+```
+
+RuleSet 4.2: Crew Message creation rules
+
+Rule 4.2.1.2:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 1_2 and 1_2.getMessageAudience() == crew and
+getPerson(S) = p and p.Type == crew)
+THEN DO(SetMessageBody(p,1.2,”Proceed to the hazard area:
+‘getEmergencyLocation’ and provide confirmation!!”) and
+SetMessageFile(p,1.2,PathImage) and SendMessage(p,1.2))
+)
+``
+
+Rule 4.2.4.1:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 4_1 and 4_1.getMessageAudience() == crew and
+getPerson(S) = p and p.Type == crew)
+THEN DO(SetMessageBody(p,4.1,”Assume your emergency post: ‘EmergencyPost’!”)
+and SendMessage(p,4.1))
+)
+```
+
+Rule 4.2.6.7:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 6_7 and 6_7.getMessageAudience() == crew and
+getPerson(S) = p and p.Type == crew and == passenger_assistance_units and
+p.AssignedPassenger = pi and getPInNeed(S) = pi)
+THEN DO(SetMessageBody(p,6.7,”Proceed to ‘IncidentLocation’. Passenger speaking
+’Passenger Language’, with [‘MobilityIssues’, ‘PregnancyStatus’, ‘MedicalAssistance’],
+needs assistance to evacuate.”) and SetMessageFile(p,6.7,PathImage)
+and SendMessage(p,6.7))
+)
+```
+
+Rule 4.2.6.9:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 6_9 and 6_9.getMessageAudience() == Crew
+and
+getPerson(S) = p and p.Type == crew)
+THEN DO(SetMessageBody(p,6.9,“’BlockedGeofence’ has been blocked.
+Follow the alternative path below: ‘PathDescription’.") and
+SetMessageFile(p,6.9,PathImage) and SendMessage(p,6.9))
+)
+```
+
+Rule 4.2.8.2:
+```
+ECA(
+ON(Message_Object_Composition_Completed)
+IF(getMessageObject(S) == 8_2 and 8_2.getMessageAudience() == crew and
+getPerson(S) = p and p.Type == crew)
+THEN DO(SetMessageBody(p,8.2,”Proceed to ‘IncidentLocation’.
+Passenger needs help! Passenger speaking ’Passenger Language’ is ’Incident Type’.”)
+and SetMessageFile(p,8.2,PathImage) and SendMessage(p,8.2))
+)
+```
+
+
+
+
+
+
 
 PaMEAS Evacuation Messaging Policy is intended to supplement the Ship’s emergency communications strategy in the context of the PALAEMON project. 
 This policy is dedicated to the TMS-MCPTT Tactilon-Agnet Service, the 5G IMS services and the EMS-Evacuation Management Service managed by the PaMEAS-A system.
