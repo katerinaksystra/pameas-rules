@@ -1,5 +1,5 @@
 ## Introduction
-The PaMEAS Evacuation Policy is part of the PaMEAS (Passenger Mustering and Evacuation Process Automation) integrated system which was developed in the context of the PALAEMON project. Specifically this policy defines the evacuation of a ship as a process with eight distinct **Evacuation Phases**. Each phase defines one or more **Evacuation Tasks** that must be executed by the passengers and/or crew members. The PaMEAS Evacuation Policy maps each such task to a (set of possibly empty) **message objects** (depending on whether the task is a messaging task or not) that specify the messages that must be communicated to the passengers and/or crew members. Essentially, these message objects are produced by executing in the current context the rules defining the policy. The result of this execution is the generation of the messages that need to be delivered to the passengers and crew (recipients, type of messages, communication channel, content and so on) instructing them to implement the various evacuation tasks. 
+The PaMEAS Evacuation Policy is part of the PaMEAS (Passenger Mustering and Evacuation Process Automation) integrated system which was developed in the context of the PALAEMON project. Specifically this policy defines the evacuation of a ship as a process with seven distinct **Evacuation Phases**. Each phase defines one or more **Evacuation Tasks** that must be executed by the passengers and/or crew members. The PaMEAS Evacuation Policy maps each such task to a (set of possibly empty) **message objects** (depending on whether the task is a messaging task or not) that specify the messages that must be communicated to the passengers and/or crew members. Essentially, these message objects are produced by executing in the current context the rules defining the policy. The result of this execution is the generation of the messages that need to be delivered to the passengers and crew (recipients, type of messages, communication channel, content and so on) instructing them to implement the various evacuation tasks. 
 
 PaMEAS Evacuation Messaging Policy is formalised as a set of Event Condition Action (ECA) rules that specify what actions a given subject (passenger or crew of the ship) should take on a given evacuation phase based on the passenger identity profile and health-status information, their location and the availability of evacuation routes; as well as on eventual incidents (for example, passengers locked in a cabin) that may occur during the evacuation process which require the intervention of the crew.
 
@@ -1070,14 +1070,6 @@ and SetMessageFile(p,8.2,PathImage) and SendMessage(p,8.2))
 )
 ```
 
-
-
-
-
-
-
 PaMEAS Evacuation Messaging Policy is intended to supplement the Ship’s emergency communications strategy in the context of the PALAEMON project. 
 This policy is dedicated to the TMS-MCPTT Tactilon-Agnet Service, the 5G IMS services and the EMS-Evacuation Management Service managed by the PaMEAS-A system.
 This policy is intended for emergency use.
-
-
