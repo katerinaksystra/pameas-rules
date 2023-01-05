@@ -682,123 +682,123 @@ SetMessageFile(p,4.3, none))
 )
 ```
 
-Rule 3.5.1:
+Rule 3.4.4:
 ```
 ECA(
-ON(Evacuation_Phase_5_Start_event)
-IF(Evacuation Process Task == T5.1)
+ON(Evacuation_Phase_4_Start_event)
+IF(Evacuation Process Task == T4.4)
 THEN DO(
-ComposeMessageObject(t5.1) and
-SetMessagetype(5.1,alert) and
-SetMessageSender(5.1,PaMEAS) and
-SetMessageAudience(5.1,passengers) and
-SetMessageLayout(5.1,[Text,Visual,Vibration,Voice]) and
-SetMessageChannel(5.1,EMS) and
-SetMessageBody(p,5.1,empty) and
-SetMessageFile(p,5.1, none))
+ComposeMessageObject(t4.4) and
+SetMessagetype(4.4,alert) and
+SetMessageSender(4.4,PaMEAS) and
+SetMessageAudience(4.4,passengers) and
+SetMessageLayout(4.4,[Text,Visual,Vibration,Voice]) and
+SetMessageChannel(4.4,EMS) and
+SetMessageBody(p,4.4,empty) and
+SetMessageFile(p,4.4, none))
 )
 ```
 
-Rule 3.6.2:
+Rule 3.5.2:
 ```
 ECA(
-ON(Evacuation_Phase_6_Start_event)
-IF(Evacuation Process Task == T6.2)
+ON(Evacuation_Phase_5_Start_event)
+IF(Evacuation Process Task == T5.2)
 THEN DO(
-ComposeMessageObject(t6.2) and
-SetMessagetype(6.2,warnings) and
-SetMessageSender(6.2,PaMEAS) and
-SetMessageAudience(6.2,passengers) and
-SetMessageLayout(6.2,[Text,Visual,Vibration,voice]) and
-SetMessageChannel(6.2,EMS) and
-SetMessageBody(p,6.2,empty) and
-SetMessageFile(p,6.2, none))
+ComposeMessageObject(t5.2) and
+SetMessagetype(5.2,warnings) and
+SetMessageSender(5.2,PaMEAS) and
+SetMessageAudience(5.2,passengers) and
+SetMessageLayout(5.2,[Text,Visual,Vibration,voice]) and
+SetMessageChannel(5.2,EMS) and
+SetMessageBody(p,5.2,empty) and
+SetMessageFile(p,5.2, none))
 )
 ```
 
 Rule 3.6.3:
 ```
 ECA(
-ON(Evacuation_Phase_6_Start_event)
-IF(Evacuation Process Task == T6.3)
+ON(Evacuation_Phase_5_Start_event)
+IF(Evacuation Process Task == T5.3)
 THEN DO(
-ComposeMessageObject(t6.3) and
-SetMessagetype(6.3,notifications) and
-SetMessageSender(6.3,PaMEAS)and
-SetMessageAudience(6.3,passengers) and
-SetMessageLayout(6.3,[Text,Visual]) and
-SetMessageChannel(6.3,EMS) and
-SetMessageBody(p, 6.3,empty) and
-SetMessageFile(p,6.3,none))
+ComposeMessageObject(t5.3) and
+SetMessagetype(5.3,notifications) and
+SetMessageSender(5.3,PaMEAS)and
+SetMessageAudience(5.3,passengers) and
+SetMessageLayout(5.3,[Text,Visual]) and
+SetMessageChannel(5.3,EMS) and
+SetMessageBody(p, 5.3,empty) and
+SetMessageFile(p,5.3,none))
 )
 ```
 
-Rule 3.6.5:
+Rule 3.5.4:
 ```
 ECA(
-ON(Evacuation_Phase_6_Start_event)
-IF(Evacuation Process Task == T6.5)
+ON(Evacuation_Phase_5_Start_event)
+IF(Evacuation Process Task == T5.4)
 THEN DO(
-ComposeMessageObject(t6.5) and
-SetMessagetype(6.5,notifications) and
-SetMessageSender(6.5,PaMEAS) and
-SetMessageAudience(6.5,passengers) and
-SetMessageLayout(6.5,[Text]) and
-SetMessageChannel(6.5,EMS) and
-SetMessageBody(p,6.5,empty) and
-SetMessageFile(p,6.5,none))
+ComposeMessageObject(t5.4) and
+SetMessagetype(5.4,notifications) and
+SetMessageSender(5.4,PaMEAS) and
+SetMessageAudience(5.4,passengers) and
+SetMessageLayout(5.4,[Text]) and
+SetMessageChannel(5.4,EMS) and
+SetMessageBody(p,5.4,empty) and
+SetMessageFile(p,5.4,none))
 )
 ```
 
-Rule 3.6.7:
+Rule 3.5.5:
 ```
 ECA(
-ON(Evacuation_Phase_6_Start_event)
-IF(Evacuation Process Task == T6.7)
+ON(Evacuation_Phase_5_Start_event)
+IF(Evacuation Process Task == T5.5)
 THEN DO(
-ComposeMessageObject(t6.7) and
-SetMessagetype(6.7,notifications) and
-SetMessageSender(6.7,EC)and
-SetMessageAudience(6.7,crew) and
-SetMessageLayout(6.7,[Text,Visual,Voice]) and
-SetMessageChannel(6.7,TMS) and
-SetMessageBody(p,6.7,empty) and
-SetMessageFile(p,6.7,none))
+ComposeMessageObject(t5.5) and
+SetMessagetype(5.5,notifications) and
+SetMessageSender(5.5,EC)and
+SetMessageAudience(5.5,crew) and
+SetMessageLayout(5.5,[Text,Visual,Voice]) and
+SetMessageChannel(5.5,TMS) and
+SetMessageBody(p,5.5,empty) and
+SetMessageFile(p,5.5,none))
 )
 ```
 
-Rule 3.6.8:
+Rule 3.5.8:
 ```
 ECA(
-ON(Evacuation_Phase_6_Start_event)
-IF(Evacuation Process Task == T6.8)
+ON(Evacuation_Phase_5_Start_event)
+IF(Evacuation Process Task == T5.8)
 THEN DO(
-ComposeMessageObject(t6.8) and
-SetMessagetype(6.8,warnings) and
-SetMessageSender(6.8,EC) and
-SetMessageAudience(6.8,crew) and
-SetMessageLayout(6.8,[Text,Visual,Voice]) and
-SetMessageChannel(6.8,TMS) and
-SetMessageBody(p,6.8,empty) and
-SetMessageFile(p,6.8,none))
+ComposeMessageObject(t5.8) and
+SetMessagetype(5.8,warnings) and
+SetMessageSender(5.8,EC) and
+SetMessageAudience(5.8,crew) and
+SetMessageLayout(5.8,[Text,Visual,Voice]) and
+SetMessageChannel(5.8,TMS) and
+SetMessageBody(p,5.8,empty) and
+SetMessageFile(p,5.8,none))
 )
 ```
 
-Rule 3.6.9:
+Rule 3.6.1:
 ```
 ECA(
 ON(Evacuation_Phase_6_Start_event)
-IF(Evacuation Process Task == T6.9 and
+IF(Evacuation Process Task == T6.1 and
 GeoFence_status == updated)
 THEN DO(
-ComposeMessageObject(t6.9) and
-SetMessagetype(6.9,notifications) and
-SetMessageSender(6.9,PaMEAS) and
-SetMessageAudience(6.9,passengers) and
-SetMessageLayout(6.9,[Text,Visual]) and
-SetMessageChannel(6.9,EMS) and
-SetMessageBody(p,6.9,empty) and
-SetMessageFile(p,6.9,none))
+ComposeMessageObject(t6.1) and
+SetMessagetype(6.1,notifications) and
+SetMessageSender(6.1,PaMEAS) and
+SetMessageAudience(6.1,passengers) and
+SetMessageLayout(6.1,[Text,Visual]) and
+SetMessageChannel(6.1,EMS) and
+SetMessageBody(p,6.1,empty) and
+SetMessageFile(p,6.1,none))
 )
 ```
 
@@ -819,71 +819,71 @@ SetMessageFile(p,7.2,none))
 )
 ```
 
-Rule 3.8.2:
+Rule 3.7.2:
 ```
 ECA(
-ON(Evacuation_Phase_8_Start_event)
-IF(Evacuation Process Task == T8.2)
+ON(Evacuation_Phase_7_Start_event)
+IF(Evacuation Process Task == T7.2)
 THEN DO(
-ComposeMessageObject(t8.2) and
-SetMessagetype(8.2,notifications) and
-SetMessageSender(8.2,EC) and
-SetMessageAudience(8.2,crew) and
-SetMessageLayout(8.2,[Text,Visual,Voice]) and
-SetMessageChannel(8.2,TMS) and
-SetMessageBody(p,8.2,empty) and
-SetMessageFile(p,8.2,none))
+ComposeMessageObject(t7.2) and
+SetMessagetype(7.2,notifications) and
+SetMessageSender(7.2,EC) and
+SetMessageAudience(7.2,crew) and
+SetMessageLayout(7.2,[Text,Visual,Voice]) and
+SetMessageChannel(7.2,TMS) and
+SetMessageBody(p,7.2,empty) and
+SetMessageFile(p,7.2,none))
 )
 ```
 
-Rule 3.8.3:
+Rule 3.7.3:
 ```
 ECA(
-ON(Evacuation_Phase_8_Start_event)
-IF(Evacuation Process Task == T8.3)
+ON(Evacuation_Phase_7_Start_event)
+IF(Evacuation Process Task == T7.3)
 THEN DO(
-ComposeMessageObject(t8.3) and
-SetMessagetype(8.3,feedback) and
-SetMessageSender(8.3,crew) and
-SetMessageAudience(8.3,EC) and
-SetMessageLayout(8.3,[Text]) and
-SetMessageChannel(8.3,TMS) and
-SetMessageBody(p,8.3,empty) and
-SetMessageFile(p,8.3,none))
+ComposeMessageObject(t7.3) and
+SetMessagetype(7.3,feedback) and
+SetMessageSender(7.3,crew) and
+SetMessageAudience(7.3,EC) and
+SetMessageLayout(7.3,[Text]) and
+SetMessageChannel(7.3,TMS) and
+SetMessageBody(p,7.3,empty) and
+SetMessageFile(p,7.3,none))
 )
 ```
 
-Rule 3.8.4:
+Rule 3.7.4:
 ```
 ECA(
-ON(Evacuation_Phase_8_Start_event)
-IF(Evacuation Process Task == T8.4)
+ON(Evacuation_Phase_7_Start_event)
+IF(Evacuation Process Task == T7.4)
 THEN DO(
-ComposeMessageObject(t8.4) and
-SetMessagetype(8.4,notifications) and
-SetMessageSender(8.4,PaMEAS) and
-SetMessageAudience(8.4,passengers) and
-SetMessageLayout(8.4,[Text,Visual,Vibration,Voice]) and
-SetMessageChannel(8.4,EMS) and
-SetMessageBody(p,8.4,empty) and
-SetMessageFile(p,8.4,none))
+ComposeMessageObject(t7.4) and
+SetMessagetype(7.4,notifications) and
+SetMessageSender(7.4,PaMEAS) and
+SetMessageAudience(7.4,passengers) and
+SetMessageLayout(7.4,[Text,Visual,Vibration,Voice]) and
+SetMessageChannel(7.4,EMS) and
+SetMessageBody(p,7.4,empty) and
+SetMessageFile(p,7.4,none))
 )
 ```
 
-Rule 3.8.5:
+Rule 3.7.5:
 ```
 ECA(
-ON(Evacuation_Phase_8_Start_event)
-IF(Evacuation Process Task == T8.5)
+ON(Evacuation_Phase_7_Start_event)
+IF(Evacuation Process Task == T7.5)
 THEN DO(
-ComposeMessageObject(t8.5) and
-SetMessagetype(8.5,communication_session) and
-SetMessageSender(8.5,[EC,CrewManagers]) and
-SetMessageAudience(8.5,crew) and
-SetMessageLayout(8.5,[Text,Voice,Visual,Video]) and
-SetMessageChannel(8.5,TMS) and
-SetMessageBody(p,8.5,empty) and
-SetMessageFile(p,8.5,none))
+ComposeMessageObject(t7.5) and
+SetMessagetype(7.5,communication_session) and
+SetMessageSender(7.5,[EC,CrewManagers]) and
+SetMessageAudience(7.5,crew) and
+SetMessageLayout(7.5,[Text,Voice,Visual,Video]) and
+SetMessageChannel(7.5,TMS) and
+SetMessageBody(p,7.5,empty) and
+SetMessageFile(p,7.5,none))
 )
 ```
 
@@ -1031,42 +1031,42 @@ and SendMessage(p,4.1))
 )
 ```
 
-Rule 4.2.6.7:
+Rule 4.2.5.5:
 ```
 ECA(
 ON(Message_Object_Composition_Completed)
-IF(getMessageObject(S) == 6_7 and 6_7.getMessageAudience() == crew and
+IF(getMessageObject(S) == 5_5 and 5_5.getMessageAudience() == crew and
 getPerson(S) = p and p.Type == crew and == passenger_assistance_units and
 p.AssignedPassenger = pi and getPInNeed(S) = pi)
-THEN DO(SetMessageBody(p,6.7,”Proceed to ‘IncidentLocation’. Passenger speaking
+THEN DO(SetMessageBody(p,5.5,”Proceed to ‘IncidentLocation’. Passenger speaking
 ’Passenger Language’, with [‘MobilityIssues’, ‘PregnancyStatus’, ‘MedicalAssistance’],
-needs assistance to evacuate.”) and SetMessageFile(p,6.7,PathImage)
-and SendMessage(p,6.7))
+needs assistance to evacuate.”) and SetMessageFile(p,5.5,PathImage)
+and SendMessage(p,5.5))
 )
 ```
 
-Rule 4.2.6.9:
+Rule 4.2.5.6:
 ```
 ECA(
 ON(Message_Object_Composition_Completed)
-IF(getMessageObject(S) == 6_9 and 6_9.getMessageAudience() == Crew
+IF(getMessageObject(S) == 5_6 and 5_6.getMessageAudience() == Crew
 and
 getPerson(S) = p and p.Type == crew)
-THEN DO(SetMessageBody(p,6.9,“’BlockedGeofence’ has been blocked.
+THEN DO(SetMessageBody(p,5.6,“’BlockedGeofence’ has been blocked.
 Follow the alternative path below: ‘PathDescription’.") and
-SetMessageFile(p,6.9,PathImage) and SendMessage(p,6.9))
+SetMessageFile(p,5.6,PathImage) and SendMessage(p,5.6))
 )
 ```
 
-Rule 4.2.8.2:
+Rule 4.2.7.2:
 ```
 ECA(
 ON(Message_Object_Composition_Completed)
-IF(getMessageObject(S) == 8_2 and 8_2.getMessageAudience() == crew and
+IF(getMessageObject(S) == 7_2 and 7_2.getMessageAudience() == crew and
 getPerson(S) = p and p.Type == crew)
-THEN DO(SetMessageBody(p,8.2,”Proceed to ‘IncidentLocation’.
+THEN DO(SetMessageBody(p,7.2,”Proceed to ‘IncidentLocation’.
 Passenger needs help! Passenger speaking ’Passenger Language’ is ’Incident Type’.”)
-and SetMessageFile(p,8.2,PathImage) and SendMessage(p,8.2))
+and SetMessageFile(p,7.2,PathImage) and SendMessage(p,7.2))
 )
 ```
 
