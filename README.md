@@ -665,6 +665,23 @@ SetMessageFile(p,4.1, none))
 )
 ```
 
+Rule 3.4.2:
+```
+ECA(
+ON(Evacuation_Phase_4_Start_event)
+IF(Evacuation Process Task == T4.2)
+THEN DO(
+ComposeMessageObject(t4.2) and
+SetMessagetype(4.2,feedback) and
+SetMessageSender(4.2,crew) and
+SetMessageAudience(4.2,EC) and
+SetMessageLayout(4.2,[Text])and
+SetMessageChannel(4.2,TMS) and
+SetMessageBody(p,4.2,empty) and
+SetMessageFile(p,4.2, none))
+)
+```
+
 Rule 3.4.3:
 ```
 ECA(
@@ -672,30 +689,13 @@ ON(Evacuation_Phase_4_Start_event)
 IF(Evacuation Process Task == T4.3)
 THEN DO(
 ComposeMessageObject(t4.3) and
-SetMessagetype(4.3,feedback) and
-SetMessageSender(4.3,crew) and
-SetMessageAudience(4.3,EC) and
-SetMessageLayout(4.3,[Text])and
-SetMessageChannel(4.1,TMS) and
+SetMessagetype(4.3,alert) and
+SetMessageSender(4.3,PaMEAS) and
+SetMessageAudience(4.3,passengers) and
+SetMessageLayout(4.3,[Text,Visual,Vibration,Voice]) and
+SetMessageChannel(4.3,EMS) and
 SetMessageBody(p,4.3,empty) and
 SetMessageFile(p,4.3, none))
-)
-```
-
-Rule 3.4.4:
-```
-ECA(
-ON(Evacuation_Phase_4_Start_event)
-IF(Evacuation Process Task == T4.4)
-THEN DO(
-ComposeMessageObject(t4.4) and
-SetMessagetype(4.4,alert) and
-SetMessageSender(4.4,PaMEAS) and
-SetMessageAudience(4.4,passengers) and
-SetMessageLayout(4.4,[Text,Visual,Vibration,Voice]) and
-SetMessageChannel(4.4,EMS) and
-SetMessageBody(p,4.4,empty) and
-SetMessageFile(p,4.4, none))
 )
 ```
 
